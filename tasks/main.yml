@@ -1,0 +1,14 @@
+---
+- name: Include ansible_distribution and ansible_os_family tasks
+  include: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+# - debug: msg="http_proxy={{ lookup('env','http_proxy') }} https_proxy={{ lookup('env','https_proxy') }} no_proxy={{ lookup('env','no_proxy') }}"
+
+- name: install - packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gitlab-runner

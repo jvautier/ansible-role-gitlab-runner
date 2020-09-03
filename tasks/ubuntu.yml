@@ -1,0 +1,27 @@
+---
+- name: install - required packages
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - debian-archive-keyring
+    - apt-transport-https
+    - ca-certificates
+- name: install - add gpg key
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt_key:
+    url: https://packages.gitlab.com/gpg.key
+    state: present
+- name: install - add repository
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt_repository:
+    repo: "deb https://packages.gitlab.com/runner/gitlab-ci-multi-runner/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main"
+    update_cache: true
+    filename: 'gitlab-ci-multi-runner'
+- name: install - add repository
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt_repository:
+    repo: "deb https://packages.gitlab.com/runner/gitlab-runner/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main"
+    update_cache: true
+    filename: 'gitlab-runner'
