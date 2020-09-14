@@ -1,0 +1,8 @@
+---
+fullname: jvautier/ansible-role-gitlab-runner
+description: Install gitlab-runner clients through ansible
+tags:
+  - ansible
+  - ansible-role
+  - gitlab-runner
+github: {}
